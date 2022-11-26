@@ -9,26 +9,8 @@ const getDeck = () => {
   for (let index = 0; index < suits.length; index++) {
     
     for (let j = 1; j <= 13; j++) {
-    
-      const displayVal = ''
 
-      switch (j) {
-        case j === 1:
-          displayVal = 'Ace'
-          break
-        case j > 1 && j <= 10:
-          displayVal = j
-          break
-        case j === 11:
-          displayVal = 'Jack'
-          break
-        case j === 12:
-          displayVal = 'Queen'
-          break
-        case j === 13:
-          displayVal = 'King'
-          break
-      }
+      const displayVal = '';
 
       const card = {
         val: j,
@@ -36,7 +18,33 @@ const getDeck = () => {
         suit: suits[index],
       }
 
-      if (displayVal === 'Ace') {
+      
+      switch (j) {
+        case 1:
+          card.displayVal = 'Ace'
+          break
+        case 2:
+        case 3:
+        case 4:
+        case 5:
+        case 6:
+        case 7:
+        case 8:
+        case 9:
+        case 10:
+          card.displayVal = j
+          break
+        case 11:
+          card.displayVal = 'Jack'
+          break
+        case 12:
+          card.displayVal = 'Queen'
+          break
+        case 13:
+          card.displayVal = 'King'
+          break
+      }
+      if (card.displayVal === 'Ace') {
         card.val = 11
       }
 
