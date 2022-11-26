@@ -7,11 +7,9 @@ const getDeck = () => {
   const suits = ['hearts', 'spades', 'clubs', 'diamonds']
 
   for (let index = 0; index < suits.length; index++) {
-    // create an array of 13 objects
+    
     for (let j = 1; j <= 13; j++) {
-      // for each loop, push a card object to the deck
-
-      // special cases for when j > 10
+    
       const displayVal = ''
 
       switch (j) {
@@ -45,6 +43,7 @@ const getDeck = () => {
       deck.push(card)
     }
   }
+  return deck;
 }
 
 // CHECKS
