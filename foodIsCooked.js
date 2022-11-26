@@ -10,7 +10,8 @@ const foodIsCooked = function(kind, internalTemp, doneness) {
 
 }
 
-
+//hihi
+//higi
 
 // Test function
 console.log(foodIsCooked('chicken', 90)); // should be false
