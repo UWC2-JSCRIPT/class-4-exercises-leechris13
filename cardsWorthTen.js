@@ -13,7 +13,12 @@ const cards = [
   { val: 10, displayVal: "King", suit: "hearts" },
   { val: 11, displayVal: "Ace", suit: "hearts" }
 ];
-
+const animals = [
+  { name: 'snake', kind: 'reptile' },
+  { name: 'crocodiles', kind: 'reptile' },
+  { name: 'panda', kind: 'mammal' },
+  { name: 'dog', kind: 'mammal' },
+  ];
 /**
  * Takes an array of cards and returns a string of the card display
  * values where the value is equal to 10
@@ -21,7 +26,11 @@ const cards = [
  * @param {array} cards
  * @return {string} displayVal
  */
-const cardsWorthTen = cards => {};
+const cardsWorthTen = cards => {
+  let array1 = cards.filter((value) => value.val === 10);
+  let array2 = array1.map(value2 => value2.displayVal);
+  return array2.join(', ') 
+};
 
 console.log(cardsWorthTen(cards));
 // should return/log "10, Jack, Queen, King"
