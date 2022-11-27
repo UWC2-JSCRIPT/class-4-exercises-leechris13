@@ -1,48 +1,56 @@
-// const getDeck = () => {
-//     const deck = []
-//     const suits = ['hearts', 'spades', 'clubs', 'diamonds']
+const getDeck2 = () => {
+    const deck = []
+    const suits = ['hearts', 'spades', 'clubs', 'diamonds']
   
-//     for (let index = 0; index < suits.length; index++) {
+    for (let index = 0; index < suits.length; index++) {
       
-//       for (let j = 1; j <= 13; j++) {
-      
-//         const displayVal = ''
+      for (let j = 1; j <= 13; j++) {
   
-//         switch (j) {
-//           case j === 1:
-//             displayVal = 'Ace'
-//             break
-//           case j > 1 && j <= 10:
-//             displayVal = j
-//             break
-//           case j === 11:
-//             displayVal = 'Jack'
-//             break
-//           case j === 12:
-//             displayVal = 'Queen'
-//             break
-//           case j === 13:
-//             displayVal = 'King'
-//             break
-//         }
+        const displayVal = '';
   
-//         const card = {
-//           val: j,
-//           displayVal: displayVal,
-//           suit: suits[index],
-//         }
+        const card = {
+          val: j,
+          displayVal: displayVal,
+          suit: suits[index],
+        }
+        
+        switch (j) {
+          case 1:
+            card.displayVal = 'Ace'
+            break
+          case 2:
+          case 3:
+          case 4:
+          case 5:
+          case 6:
+          case 7:
+          case 8:
+          case 9:
+          case 10:
+            card.displayVal = "" + j
+            break
+          case 11:
+            card.displayVal = 'Jack'
+            break
+          case 12:
+            card.displayVal = 'Queen'
+            break
+          case 13:
+            card.displayVal = 'King'
+            break
+        }
   
-//         if (displayVal === 'Ace') {
-//           card.val = 11
-//         }
+        if (card.displayVal === 'Ace') {
+          card.val = 11
+        }
   
-//         deck.push(card)
-//       }
-//     }
-//     return deck;
-//   }
+        deck.push(card)
+      }
+    }
+    return deck;
+  }
 
-const blackjackDeck = getDeck();
+const blackjackDeck = getDeck2();
 
 /**
  * Represents a card player (including dealer).
@@ -74,7 +82,7 @@ const player = new CardPlayer('Player'); // TODO
 const calcPoints = (hand) => {
   // CREATE FUNCTION HERE
     let blackJackScore = {total: 0, isSoft: false};
-    let aceComp = 0;
+    let over21 = 0;
     let aceCount = 0;
     let totalCount = 0;
     hand.forEach((card) => {
@@ -82,22 +90,36 @@ const calcPoints = (hand) => {
         //
         if((card.displayVal) === 'Ace'){
             aceCount++;
-            isSoft = true;
         }
         //checking if it is ACE and totalcount + 11 is less than 21
         //if greater than 21, then change ACE value to 1
-        if(card.displayVal === 'Ace' && (totalCount + 11) < 21) {
-            aceComp++;
+        if(card.displayVal === 'Ace' && (totalCount + 11) > 21) {
+            over21++;
             card.val = 1;
             totalCount += card.val;
         } else {
             totalCount += card.val;
         }
-        if(aceCount == aceComp && aceCount > 0) {
-            isSoft = false;
-        } 
+        
     })
-    total = totalCount;
+    if(aceCount == over21 && aceCount > 0) {
+        blackJackScore.isSoft = false;
+    } 
+    if(aceCount == 1) {
+        blackJackScore.isSoft = true;
+    }
+    if (totalCount == 17 && aceCount == 1) {
+        totalCount = 0;
+        hand.forEach((card) => {
+            if((card.displayVal) === 'Ace') {
+                card.val = 1;
+                totalCount += card.val;
+            } else {
+                totalCount += card.val;
+            }
+        })
+    }
+    blackJackScore.total = totalCount;
     return blackJackScore;
 }
 
@@ -109,8 +131,14 @@ const calcPoints = (hand) => {
  */
 const dealerShouldDraw = (dealerHand) => {
   // CREATE FUNCTION HERE
-    let dealerPoints = calcPoints(dealerHand);
-    
+    let dealerStat = calcPoints(dealerHand);
+    if (dealerStat.total <= 16) {
+        return true;
+    } else if (dealerStat.total == 17 && dealerStat.isSoft == true) {
+        return true;
+    } else {
+        return false;
+    }
 }
 
 /**
@@ -121,7 +149,12 @@ const dealerShouldDraw = (dealerHand) => {
  */
 const determineWinner = (playerScore, dealerScore) => {
   // CREATE FUNCTION HERE
-
+    if(playerScore > 21) {
+        return `Dealer's score: ${dealerScore} & Player's score: ${playerScore}, dealer wins!`
+    } else {
+        return `Dealer's score: ${dealerScore} & Player's score: ${playerScore}, player wins!`
+    }
+    
 }
 
 /**
@@ -176,4 +209,4 @@ const startGame = function() {
 
   return determineWinner(playerScore, dealerScore);
 }
-// console.log(startGame());
+ console.log(startGame());

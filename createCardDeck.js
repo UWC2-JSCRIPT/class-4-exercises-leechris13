@@ -17,7 +17,6 @@ const getDeck = () => {
         displayVal: displayVal,
         suit: suits[index],
       }
-
       
       switch (j) {
         case 1:
@@ -32,7 +31,7 @@ const getDeck = () => {
         case 8:
         case 9:
         case 10:
-          card.displayVal = j
+          card.displayVal = "" + j
           break
         case 11:
           card.displayVal = 'Jack'
@@ -44,6 +43,7 @@ const getDeck = () => {
           card.displayVal = 'King'
           break
       }
+
       if (card.displayVal === 'Ace') {
         card.val = 11
       }
